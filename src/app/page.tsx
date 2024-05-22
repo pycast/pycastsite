@@ -1,7 +1,5 @@
-export default function () {
+export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col">
-      <div className="font-semibold text-3xl uppercase p-12">pycast</div>
-    </main>
+      <div className="font-semibold text-2xl uppercase">Super site !!!</div>
   );
 }

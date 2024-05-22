@@ -7,14 +7,14 @@ export default function Page() {
     const [inputSeconds, setInputSeconds] = useState('');
     const [inputMinutes, setInputMinutes] = useState('');
 
-    const handleInputMinutesChange = (event) => {
+    const handleInputMinutesChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setInputMinutes(event.target.value);
     };
-    const handleInputSecondsChange = (event) => {
+    const handleInputSecondsChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setInputSeconds(event.target.value);
     };
 
-    const handleButtonClick = (operator) => {
+    const handleButtonClick = (operator: string) => {
         const minutes = parseInt(inputMinutes ?? 0, 10);
         const seconds = parseInt(inputSeconds ?? 0, 10);
         const timeToAdd = minutes * 60 + seconds;
@@ -44,8 +44,9 @@ export default function Page() {
     };
 
     return (
-        <main>
-            <h1>Simple time calculator</h1>
+        <div>
+            <h1 className='text-2xl'>Simple time calculator</h1>
+            <div className='p-5'>
             <p>Secondes totales : {totalTime}</p>
             <p>Temps total : <span className='text-sky-400'>{formatTotalTime(totalTime)}</span></p>
             <label> Minutes <br />
@@ -76,6 +77,7 @@ export default function Page() {
                 <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleButtonClick('-')}>-</button> 
                 <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" onClick={handleReset}>Reset</button>
             </div>
-        </main>
+            </div>
+        </div>
     );
 }
