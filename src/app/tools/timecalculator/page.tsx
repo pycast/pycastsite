@@ -18,6 +18,19 @@ export default function Page() {
     setInputSeconds(event.target.value);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const minutes = parseInt(inputMinutes ?? 0, 10);
+    const seconds = parseInt(inputSeconds ?? 0, 10);
+    const timeToAdd = minutes * 60 + seconds;
+
+    if (!isNaN(timeToAdd)) {
+      setTotalTime(totalTime + timeToAdd);
+      setInputSeconds("0");
+      setInputMinutes("0");
+    }
+  };
+
   const handleButtonClick = (operator: string) => {
     const minutes = parseInt(inputMinutes ?? 0, 10);
     const seconds = parseInt(inputSeconds ?? 0, 10);
@@ -48,13 +61,16 @@ export default function Page() {
   };
 
   return (
-    <div>
-      <h1 className='text-2xl'>Simple time calculator</h1>
-      <div className='p-5'>
+    <div className='flex justify-center items-center absolute inset-0'>
+      <form
+        onSubmit={(e)=>handleSubmit(e)}
+        className=' rounded-md bg-neutral-300 text-black p-5'
+      >
+        <h1 className='text-2xl'>Simple time calculator</h1>
         <p>Secondes totales : {totalTime}</p>
         <p>
           Temps total :{" "}
-          <span className='text-sky-400'>{formatTotalTime(totalTime)}</span>
+          <span className='text-sky-600'>{formatTotalTime(totalTime)}</span>
         </p>
         <label>
           {" "}
@@ -62,7 +78,7 @@ export default function Page() {
           <input
             type='number'
             name='calcTime'
-            className='border-2 border-white'
+            className='border-2 text-white rounded-sm p-1'
             value={inputMinutes}
             inputMode='numeric'
             pattern='[0-9]*'
@@ -76,34 +92,34 @@ export default function Page() {
           <input
             type='number'
             name='calcTime'
-            className='border-2 border-white'
+            className='border-2 text-white rounded-sm p-1'
             value={inputSeconds}
             inputMode='numeric'
             pattern='[0-9]*'
             onChange={handleInputSecondsChange}
           />
         </label>
-        <div className='pt-5 pl-5'>
+        <div className='flex justify-center items-center py-3'>
+          <input
+            type='submit'
+            value='+'
+            className='bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded'
+            // onClick={() => handleButtonClick("+")}
+          />
           <button
-            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-            onClick={() => handleButtonClick("+")}
-          >
-            +
-          </button>
-          <button
-            className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+            className='bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded'
             onClick={() => handleButtonClick("-")}
           >
             -
           </button>
           <button
-            className='bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded'
+            className='bg-teal-500 hover:bg-teal-700 font-bold py-2 px-4 rounded'
             onClick={handleReset}
           >
             Reset
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
